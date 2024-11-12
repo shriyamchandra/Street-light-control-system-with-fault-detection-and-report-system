@@ -1,38 +1,231 @@
+/* src/App.css */
+
+/* Define CSS Variables */
+:root {
+  --led-size: 40px;
+  --led-size-mobile: 30px;
+  --pulse-duration: 2s;
+  --pulse-color: rgba(255, 255, 255, 0.5);
+  --pulse-color-active: rgba(255, 255, 255, 1);
+  --background-light: #f0f2f5;
+  --background-dark: #303030;
+  --card-background-light: rgba(255, 255, 255, 0.8);
+  /* Semi-transparent white */
+  --card-background-dark: rgba(66, 66, 66, 0.8);
+  /* Semi-transparent dark */
+  --text-color-light: #000000;
+  --text-color-dark: #ffffff;
+}
+
+/* Body Styling */
+body {
+  background-color: var(--background-light);
+  transition: background-color 0.3s;
+  margin: 0;
+  /* Remove default margin */
+  font-family: 'Roboto', sans-serif;
+  /* Ensure consistent font */
+}
+
+body.dark-mode {
+  background-color: var(--background-dark);
+}
+
+/* App Container */
+.App {
+  position: relative;
+  /* Establishes a positioning context for the overlay */
+  min-height: 100vh;
+  padding: 20px;
+  overflow: hidden;
+  /* Prevents scrollbars due to fixed overlay */
+}
+
+/* Blur Overlay using ::before pseudo-element */
+.App::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('./assets/background.webp');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  filter: blur(15px);
+  -webkit-filter: blur(15px);
+  /* For Safari support */
+  z-index: -1;
+  /* Places the background below all content */
+}
+
+/* Main Content Container */
+.main-container {
+  position: relative;
+  z-index: 1;
+  /* Ensures the content sits above the blur overlay */
+  background-color: rgba(255, 255, 255, 0.8);
+  /* Light semi-transparent background */
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s;
+  max-width: 1200px;
+  /* Limit the maximum width for better readability */
+  margin: 0 auto;
+  /* Center the container */
+}
+
+body.dark-mode .main-container {
+  background-color: rgba(50, 50, 50, 0.8);
+  /* Dark semi-transparent background */
+}
+
+/* LED Indicator Styles */
+/* These are handled in LEDIndicator.css, but you can include base styles here if needed */
+.led-indicator-container {
+  /* Example base styles (if any) */
+}
+
+.led-indicator {
+  /* Example base styles (if any) */
+}
+
+.led-indicator.active {
+  /* Example active state styles */
+}
+
+.led-indicator.faulty {
+  /* Example faulty state styles */
+}
+
+/* Pulsating Effect */
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 10px var(--pulse-color);
+  }
+
+  50% {
+    box-shadow: 0 0 20px var(--pulse-color-active);
+  }
+
+  100% {
+    box-shadow: 0 0 10px var(--pulse-color);
+  }
+}
+
+/* Responsive Preformatted Text for Status */
+pre {
+  font-family: 'Courier New', Courier, monospace;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  /* Semi-transparent background */
+  background-color: rgba(245, 245, 245, 0.8);
+  /* Light Mode */
+  padding: 10px;
+  border-radius: 5px;
+  margin-top: 20px;
+  max-height: 400px;
+  overflow: auto;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+body.dark-mode pre {
+  background-color: rgba(66, 66, 66, 0.8);
+  /* Dark Mode */
+  color: #ffffff;
+}
+
+/* Card Styling */
+.MuiCard-root {
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: var(--card-background-light);
+  /* Semi-transparent white */
+  transition: background-color 0.3s;
+}
+
+body.dark-mode .MuiCard-root {
+  background-color: var(--card-background-dark);
+  /* Semi-transparent dark */
+}
+
+/* Button Hover Effects */
+button:hover {
+  opacity: 0.9;
+}
+
+/* Tooltip Styling */
+.MuiTooltip-tooltip {
+  font-size: 0.9rem;
+}
+
+/* Switch Positioning */
+.switch-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 600px) {
+  :root {
+    --led-size: var(--led-size-mobile);
+  }
+
+  .led-indicator img {
+    width: calc(var(--led-size) / 1.5);
+    height: calc(var(--led-size) / 1.5);
+  }
+
+  .led-indicator {
+    width: var(--led-size);
+    height: var(--led-size);
+  }
+
+  .main-container {
+    padding: 10px;
+  }
+
+  pre {
+    max-height: 300px;
+  }
+}
+
+/* Text Shadows for Readability */
+.MuiTypography-root {
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+  /* Light Mode */
+}
+
+body.dark-mode .MuiTypography-root {
+  text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.3);
+  /* Dark Mode */
+}
+
+/* Scrollbar Styling for Preformatted Text (Optional) */
+pre::-webkit-scrollbar {
+  width: 8px;
+}
+
+pre::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+pre::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
+}
+
+/* Additional Styles as Needed */
+/* src/App.css */
+
 .App {
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.main-container {
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
